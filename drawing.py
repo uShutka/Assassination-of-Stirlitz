@@ -1,6 +1,5 @@
 import pygame
 from settings import *
-from ray_casting import ray_casting
 from map import mini_map
 
 class Drawing:
@@ -30,28 +29,29 @@ class Drawing:
 
 
     def fps(self, clock):
-        """Отрисовываем кол-во фпс в углу экрана"""
+        """Draw the fps count in the corner of the screen"""
         display_fps = str(int(clock.get_fps()))
         render = self.font.render(display_fps, 0, RED)
         self.sc.blit(render, (WIDTH - len(display_fps) * 21, 5))
 
     def kill(self):
-        """Отрисовываем кол-во фпс в углу экрана"""
-        text = "Поздравляю! Вы совершили килл. Теперь направляйтесь к двери"
+        """Drawing the murder in the screen"""
+        text = "Congratulations! You made the kill. Now head for the door."
         render_win_text = self.font.render(text, 0, RED)
         render_ok_text = self.font.render('OK', 0, BLACK)
         pygame.draw.rect(self.sc, WHITE, (len(text), HALF_HEIGHT- 21,  21 * (len(text)-8), 100))
-        pygame.draw.rect(self.sc, RED, (WIDTH - len(text) * 2 - 50, HALF_HEIGHT + len(text) - 30, 90, 45))
+        pygame.draw.rect(self.sc, RED, (WIDTH - len(text) * 2 - 100, HALF_HEIGHT + len(text) - 30, 90, 45))
         self.sc.blit(render_win_text, (len(text), HALF_HEIGHT- 21))
-        self.sc.blit(render_ok_text, (WIDTH - len(text) * 2 - 25, HALF_HEIGHT + len(text) - 20))
+        self.sc.blit(render_ok_text, (WIDTH - len(text) * 2 - 75, HALF_HEIGHT + len(text) - 20))
 
     def bullet(self):
+        """bullet"""
         g_surf = pygame.transform.scale(self.gun, (self.gun.get_width() * 10, self.gun.get_height() * 10))
         gun_rect = g_surf.get_rect(center=(HALF_WIDTH, HEIGHT-320))
         self.sc.blit(g_surf, gun_rect)
 
     def mini_map(self, player):
-        """Отрисовываем мини карту"""
+        """Drawing a mini-map"""
         self.sc_map.fill(BLACK)
         map_x, map_y = player.x // scale_of_minimap, player.y // scale_of_minimap
         pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 12 * math.cos(player.angle),
@@ -62,19 +62,22 @@ class Drawing:
         self.sc.blit(self.sc_map, position_of_map)
 
     def press_e(self):
-        text = "Нажмите е для прохождения"
+        """Click on e"""
+        text = "Press e to pass"
         render = self.font.render(text, 0, RED)
-        pygame.draw.rect(self.sc, WHITE, (HALF_WIDTH - len(text) * 8, HALF_HEIGHT,  21 * (len(text)-8) + 95, 27))
+        pygame.draw.rect(self.sc, WHITE, (HALF_WIDTH - len(text) * 8, HALF_HEIGHT,  21 * (len(text)) + 10, 27))
         self.sc.blit(render, (HALF_WIDTH - len(text) * 8, HALF_HEIGHT))
 
     def not_press_e(self):
-        text = "Вы еще не победили всех противников"
+        """You can't go any further"""
+        text = "You have not yet defeated all your opponents."
         render = self.font.render(text, 0, RED)
         pygame.draw.rect(self.sc, WHITE, (HALF_WIDTH - len(text) * 9, HALF_HEIGHT,  21 * (len(text)-8) + 68, 27))
         self.sc.blit(render, (HALF_WIDTH - len(text) * 9, HALF_HEIGHT))
 
     def win(self):
-        text = "Победа!"
+        """Victory"""
+        text = "You are win!"
         render = self.font.render(text, 0, RED)
         pygame.draw.rect(self.sc, WHITE, (HALF_WIDTH - len(text) * 8, HALF_HEIGHT,  21 * (len(text)-8) + 143, 27))
         self.sc.blit(render, (HALF_WIDTH - len(text) * 8, HALF_HEIGHT))

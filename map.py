@@ -15,7 +15,7 @@ text_map = [
 world_map = {}
 mini_map = set()
 
-# находим координаты левой верхней точки квадрата части карты обозначаемой W
+# find the coordinates of the upper left point of the square of the part of the map labeled W
 for j, row in enumerate(text_map):
     for i, char in enumerate(row):
         if char == 'W':

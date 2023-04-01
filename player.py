@@ -15,7 +15,7 @@ def play_sound_steps():
     return time.time()
 
 
-# Проверяем не пытается ли игрок зайти в стенку
+# Check if the player is trying to go into the wall
 def check(player_position):
     for x, y in world_map:
         if (reset_num(player_position[0], -2), reset_num(player_position[1], -2)) == (x, y):
@@ -31,11 +31,11 @@ class Player:
 
     @property
     def pos(self):
-        """Получаем позицию игрока"""
+        """Getting a player's position"""
         return self.x, self.y
 
     def movement(self):
-        """Регистрируем нажатие клавиш и выполняем какие-либо движения"""
+        """Register key presses and perform any movements"""
         global time_play
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
@@ -97,6 +97,7 @@ class Player:
         self.angle %= pi_multiply_2
 
     def shoot(self, enemy):
+        """Shooting"""
         for i in range(WIDTH):
             x_p, y_p = (int(self.pos[0] + i * math.cos(self.angle)), int(self.pos[1] + i * math.sin(self.angle)))
             rod_coord = round(x_p, -1), round(y_p, -1)

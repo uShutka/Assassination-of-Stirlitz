@@ -4,11 +4,12 @@ from map import world_map
 
 
 def mapping(a, b):
+    """Checking the contact"""
     return (a // size_of_box) * size_of_box, (b // size_of_box) * size_of_box
 
 
 def ray_casting(player_position, angle_of_player, textures):
-    """Основная функция отрисовки прямоугольников в соответствии с 2д картой описанной в файле map"""
+    """The main function of drawing rectangles according to the 2D map described in the map file"""
     walls = []
     ox, oy = player_position
     xm, ym = mapping(ox, oy)
@@ -19,7 +20,7 @@ def ray_casting(player_position, angle_of_player, textures):
         sin_a = sin_a if sin_a else 0.000001
         cos_a = cos_a if cos_a else 0.000001
 
-        # проверяем пересечение с вертикалями по алгоритму Брензенхэма
+        # check the intersection with the verticals using the Brenzenham algorithm
         x, dx = (xm + size_of_box, 1) if cos_a >= 0 else (xm, -1)
         for i in range(0, WIDTH, size_of_box):
             depth_v = (x - ox) / cos_a
@@ -31,7 +32,7 @@ def ray_casting(player_position, angle_of_player, textures):
 
             x += dx * size_of_box
 
-        # проверяем пересечение с горизонталями по алгоритму Брензенхэма
+        # check the intersection with the horizontals by the Brenzenham algorithm
         y, dy = (ym + size_of_box, 1) if sin_a >= 0 else (ym, -1)
         for i in range(0, HEIGHT, size_of_box):
             depth_h = (y - oy) / sin_a
@@ -43,7 +44,7 @@ def ray_casting(player_position, angle_of_player, textures):
 
             y += dy * size_of_box
 
-        # строим проекцию
+        # projection
         depth, offset, texture = (depth_v, yv, texture_v) if depth_v < depth_h else (depth_h, xh, texture_h)
         offset = int(offset) % size_of_box
         depth *= math.cos(angle_of_player - cur_angle)
